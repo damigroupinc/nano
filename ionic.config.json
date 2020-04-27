@@ -1,0 +1,7 @@
+{
+  "name": "nano",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

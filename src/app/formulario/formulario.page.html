@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Adds Records</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-input type="text" [(ngModel)]="registro.titulo" placeholder="Title"></ion-input>
+  <ion-input type="text" [(ngModel)]="registro.descricao" placeholder="Description"></ion-input>
+  <ion-item>
+    <ion-label *ngIf="registro.receita">Income</ion-label>
+    <ion-label *ngIf="!registro.receita">Expenses</ion-label>
+    <ion-toggle [(ngModel)]="registro.receita"></ion-toggle>
+  </ion-item>
+  <ion-item>
+    <ion-label>Kind</ion-label>
+    <ion-select [(ngModel)]="registro.tipo">
+      <ion-select-option value="fixa">Monthly</ion-select-option>
+      <ion-select-option value="unica">Single</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label>Day</ion-label>
+    <ion-input type="number" [(ngModel)]="registro.dia"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Value US$</ion-label>
+    <ion-input type="number" [(ngModel)]="registro.valor" placeholder="Valor"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Category</ion-label>
+    <ion-select [(ngModel)]="registro.category">
+      <ion-select-option value="Food">Food</ion-select-option>
+      <ion-select-option value="Pets">Pets</ion-select-option>
+      <ion-select-option value="Houses">House</ion-select-option>
+      <ion-select-option value="Education">Education</ion-select-option>
+      <ion-select-option value="Tax">Tax</ion-select-option>
+      <ion-select-option value="Hobbies">Hobbies</ion-select-option>
+      <ion-select-option value="Salary">Salary</ion-select-option>
+      <ion-select-option value="Others">Others</ion-select-option>
+    </ion-select>
+  </ion-item>
+  
+  <ion-button color="danger" (click)="cancelar()">Cancel</ion-button>
+  <ion-button color="success" (click)="addRegistro()">Add</ion-button>
+
+</ion-content>

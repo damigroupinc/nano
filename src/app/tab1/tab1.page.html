@@ -1,0 +1,124 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      {{ global.name }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button (click)="abreModal('abrirFormulario')" color="danger">
+    <ion-icon name="add">
+    </ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
+<ion-fab vertical="top" horizontal="start" slot="fixed">
+  <ion-fab-button (click)="atualiza()" color="success">
+
+    <ion-icon name="radio-button-on"></ion-icon>
+
+  </ion-fab-button>
+</ion-fab>
+
+<ion-fab vertical="top" horizontal="end" slot="fixed">
+  <ion-fab-button (click)="abreModal('mudarMes')">
+    <ion-icon name="calendar"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
+<ion-content class="ion-padding">
+  <ion-grid>
+
+    <ion-row>
+      <ion-col size="6">
+
+        <div *ngIf="canHaveLink('receita')">
+          <ion-card routerLink="/receita">
+            <ion-img src="/assets/icon/receita.jpg"></ion-img>
+            <ion-card-header>
+              <ion-card-subtitle>Income</ion-card-subtitle>
+              <strong>{{ receita | currency:'USD':'symbol':'1.2-2' }}</strong>
+            </ion-card-header>
+          </ion-card>
+        </div>
+
+        <div *ngIf="!canHaveLink('receita')">
+          <ion-card>
+            <ion-img src="/assets/icon/receita.jpg"></ion-img>
+            <ion-card-header>
+              <ion-card-subtitle>Cash Income</ion-card-subtitle>
+              <strong>{{ receita | currency:'USD':'symbol':'1.2-2'}}</strong>
+            </ion-card-header>
+          </ion-card>
+        </div>
+      </ion-col>
+      <ion-col size="6">
+        <div *ngIf="canHaveLink('despesa')">
+          <ion-card routerLink="/despesa">
+            <ion-img src="/assets/icon/despesa.jpg"></ion-img>
+            <ion-card-header>
+              <ion-card-subtitle>Expenses</ion-card-subtitle>
+              <strong>{{ despesa | currency:'USD':'symbol':'1.2-2' }}</strong>
+            </ion-card-header>
+          </ion-card>
+        </div>
+        <div *ngIf="!canHaveLink('despesa')">
+          <ion-card>
+            <ion-img src="/assets/icon/despesa.jpg"></ion-img>
+            <ion-card-header>
+              <ion-card-subtitle>Expenses</ion-card-subtitle>
+              <strong>{{ despesa | currency:'USD':'symbol':'1.2-2'}}</strong>
+            </ion-card-header>
+          </ion-card>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  
+  <!-- <h2>Balance: {{ ( parseFloat.valorDisponivelMes | currency:'USD':'symbol':'1.2-2') || "0,00" }}</h2>  -->
+
+  <h2> Balance: {{ valorDisponivelMes | currency:'USD':'symbol':'1.2-2' }}</h2>  
+
+  <div *ngIf="isEmpty(listaGeral)">
+    <ion-list>
+      <ion-list-header>
+        <ion-label>More newest:</ion-label>
+      </ion-list-header>
+      <ion-item-sliding *ngFor="let item of listaGeral; let i = index">
+        <ion-item *ngIf="item.valor">
+          <ion-avatar slot="start">
+            <ion-img *ngIf="!item.receita" src="/assets/icon/despesa.jpg"></ion-img>
+            <ion-img *ngIf="item.receita" src="/assets/icon/receita.jpg"></ion-img>
+          </ion-avatar>
+          <ion-label> <!--
+            <h2 *ngIf="!item.receita">Expenses</h2>
+            <h2 *ngIf="item.receita">Cash income</h2> -->
+            <h3>{{item.titulo}} {{ item.valor | currency:'USD':'symbol':'1.2-2' }}</h3>
+            <p>{{ item.descricao }} - Day: {{ item.dia }}</p>
+            <p>{{ item.category }} - {{ item.tipo }}</p>    
+                    
+          </ion-label>
+        </ion-item>
+        <ion-item-options side="start">
+          <ion-item-option color="danger" (click)="deleteItem(i, item.tipo, item.receita)">Delete</ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </div>
+
+  <ion-card>
+    <ion-card-header>
+      Doughnut Chart
+    </ion-card-header>
+    <ion-card-content>
+      <canvas #doughnutCanvas></canvas>
+    </ion-card-content>
+  </ion-card>
+
+
+</ion-content>
